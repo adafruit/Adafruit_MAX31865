@@ -1,7 +1,7 @@
 /*************************************************** 
-  This is a library for the Adafruit Thermocouple Sensor w/MAX31865
+  This is a library for the Adafruit PT100/P1000 RTD Sensor w/MAX31865
 
-  Designed specifically to work with the Adafruit Thermocouple Sensor
+  Designed specifically to work with the Adafruit RTD Sensor
   ----> https://www.adafruit.com/products/3328
 
   This sensor uses SPI to communicate, 4 pins are required to  
