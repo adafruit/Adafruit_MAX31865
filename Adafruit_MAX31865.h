@@ -76,6 +76,7 @@ class Adafruit_MAX31865 {
   void setWires(max31865_numwires_t wires);
   void autoConvert(boolean b);
   void enableBias(boolean b);
+  void enable50Hz(boolean b);
 
   float temperature(float RTDnominal, float refResistor);
 
