@@ -122,7 +122,7 @@ float  Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
   Rt /= 32768;
   Rt *= refResistor;
   
-  //Serial.print("Resistance: "); Serial.println(Rt, 8);
+  // Serial.print("\nResistance: "); Serial.println(Rt, 8);
 
   Z1 = -RTD_A;
   Z2 = RTD_A * RTD_A - (4 * RTD_B);
@@ -135,6 +135,9 @@ float  Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
   if (temp >= 0) return temp;
 
   // ugh.
+  Rt /= RTDnominal;
+  Rt *= 100;      // normalize to 100 ohm
+
   float rpoly = Rt;
 
   temp = -242.02;
