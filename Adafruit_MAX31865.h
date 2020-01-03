@@ -66,7 +66,7 @@ class Adafruit_MAX31865 {
   Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi, int8_t spi_miso, int8_t spi_clk);
   Adafruit_MAX31865(int8_t spi_cs);
 
-  boolean begin(max31865_numwires_t x = MAX31865_2WIRE);
+  bool begin(max31865_numwires_t x = MAX31865_2WIRE);
 
   uint8_t readFault(void);
   void clearFault(void);
@@ -74,8 +74,8 @@ class Adafruit_MAX31865 {
 
 
   void setWires(max31865_numwires_t wires);
-  void autoConvert(boolean b);
-  void enableBias(boolean b);
+  void autoConvert(bool b);
+  void enableBias(bool b);
 
   float temperature(float RTDnominal, float refResistor);
 

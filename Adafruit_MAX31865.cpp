@@ -42,7 +42,7 @@ Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs) {
   _sclk = _miso = _mosi = -1;
 }
 
-boolean Adafruit_MAX31865::begin(max31865_numwires_t wires) {
+bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
   pinMode(_cs, OUTPUT);
   digitalWrite(_cs, HIGH);
 
@@ -82,7 +82,7 @@ void Adafruit_MAX31865::clearFault(void) {
   writeRegister8(MAX31856_CONFIG_REG, t);
 }
 
-void Adafruit_MAX31865::enableBias(boolean b) {
+void Adafruit_MAX31865::enableBias(bool b) {
   uint8_t t = readRegister8(MAX31856_CONFIG_REG);
   if (b) {
     t |= MAX31856_CONFIG_BIAS;       // enable bias
@@ -92,7 +92,7 @@ void Adafruit_MAX31865::enableBias(boolean b) {
   writeRegister8(MAX31856_CONFIG_REG, t);
 }
 
-void Adafruit_MAX31865::autoConvert(boolean b) {
+void Adafruit_MAX31865::autoConvert(bool b) {
   uint8_t t = readRegister8(MAX31856_CONFIG_REG);
   if (b) {
     t |= MAX31856_CONFIG_MODEAUTO;       // enable autoconvert
