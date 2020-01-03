@@ -27,7 +27,16 @@
 static SPISettings max31865_spisettings =
     SPISettings(500000, MSBFIRST, SPI_MODE1);
 
-// Software (bitbang) SPI
+/**************************************************************************/
+/*!
+    @brief Create the interface object using software (bitbang) SPI
+    @param spi_cs the SPI CS pin to use
+    @param spi_mosi the SPI MOSI pin to use
+    @param spi_miso the SPI MISO pin to use
+    @param spi_clk the SPI clock pin to use
+*/
+/**************************************************************************/
+//
 Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi,
                                      int8_t spi_miso, int8_t spi_clk) {
   _sclk = spi_clk;
@@ -36,12 +45,25 @@ Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi,
   _mosi = spi_mosi;
 }
 
-// Hardware SPI init
+/**************************************************************************/
+/*!
+    @brief Create the interface object using hardware SPI
+    @param spi_cs the SPI CS pin to use along with the default SPI device
+*/
+/**************************************************************************/
 Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs) {
   _cs = spi_cs;
   _sclk = _miso = _mosi = -1;
 }
 
+/**************************************************************************/
+/*!
+    @brief Initialize the SPI interface and set the number of RTD wires used
+    @param wires The number of wires in enum format. Can be MAX31865_2WIRE,
+    MAX31865_3WIRE, or MAX31865_4WIRE
+    @return True
+*/
+/**************************************************************************/
 bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
   pinMode(_cs, OUTPUT);
   digitalWrite(_cs, HIGH);
@@ -71,10 +93,21 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
   return true;
 }
 
+/**************************************************************************/
+/*!
+    @brief Read the raw 8-bit FAULTSTAT register
+    @return The raw unsigned 8-bit FAULT status register
+*/
+/**************************************************************************/
 uint8_t Adafruit_MAX31865::readFault(void) {
   return readRegister8(MAX31856_FAULTSTAT_REG);
 }
 
+/**************************************************************************/
+/*!
+    @brief Clear all faults in FAULTSTAT
+*/
+/**************************************************************************/
 void Adafruit_MAX31865::clearFault(void) {
   uint8_t t = readRegister8(MAX31856_CONFIG_REG);
   t &= ~0x2C;
@@ -82,6 +115,12 @@ void Adafruit_MAX31865::clearFault(void) {
   writeRegister8(MAX31856_CONFIG_REG, t);
 }
 
+/**************************************************************************/
+/*!
+    @brief Enable the bias voltage on the RTD sensor
+    @param b If true bias is enabled, else disabled
+*/
+/**************************************************************************/
 void Adafruit_MAX31865::enableBias(bool b) {
   uint8_t t = readRegister8(MAX31856_CONFIG_REG);
   if (b) {
@@ -92,6 +131,12 @@ void Adafruit_MAX31865::enableBias(bool b) {
   writeRegister8(MAX31856_CONFIG_REG, t);
 }
 
+/**************************************************************************/
+/*!
+    @brief Whether we want to have continuous conversions (50/60 Hz)
+    @param b If true, auto conversion is enabled
+*/
+/**************************************************************************/
 void Adafruit_MAX31865::autoConvert(bool b) {
   uint8_t t = readRegister8(MAX31856_CONFIG_REG);
   if (b) {
@@ -102,6 +147,13 @@ void Adafruit_MAX31865::autoConvert(bool b) {
   writeRegister8(MAX31856_CONFIG_REG, t);
 }
 
+/**************************************************************************/
+/*!
+    @brief How many wires we have in our RTD setup, can be MAX31865_2WIRE,
+    MAX31865_3WIRE, or MAX31865_4WIRE
+    @param wires The number of wires in enum format
+*/
+/**************************************************************************/
 void Adafruit_MAX31865::setWires(max31865_numwires_t wires) {
   uint8_t t = readRegister8(MAX31856_CONFIG_REG);
   if (wires == MAX31865_3WIRE) {
@@ -113,9 +165,20 @@ void Adafruit_MAX31865::setWires(max31865_numwires_t wires) {
   writeRegister8(MAX31856_CONFIG_REG, t);
 }
 
+/**************************************************************************/
+/*!
+    @brief Read the temperature in C from the RTD through calculation of the
+    resistance. Uses
+   http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf
+   technique
+    @param RTDnominal The 'nominal' resistance of the RTD sensor, usually 100
+    or 1000
+    @param refResistor The value of the matching reference resistor, usually
+    430 or 4300
+    @returns Temperature in C
+*/
+/**************************************************************************/
 float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
-  // http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf
-
   float Z1, Z2, Z3, Z4, Rt, temp;
 
   Rt = readRTD();
@@ -155,6 +218,12 @@ float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
   return temp;
 }
 
+/**************************************************************************/
+/*!
+    @brief Read the raw 16-bit value from the RTD_REG in one shot mode
+    @return The raw unsigned 16-bit value, NOT temperature!
+*/
+/**************************************************************************/
 uint16_t Adafruit_MAX31865::readRTD(void) {
   clearFault();
   enableBias(true);
