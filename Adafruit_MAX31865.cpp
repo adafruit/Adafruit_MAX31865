@@ -229,6 +229,7 @@ uint16_t Adafruit_MAX31865::readRTD(void) {
   delay(65);
 
   uint16_t rtd = readRegister16(MAX31856_RTDMSB_REG);
+  enableBias(false);	// to lessen sensor self-heating
 
   // remove fault
   rtd >>= 1;
