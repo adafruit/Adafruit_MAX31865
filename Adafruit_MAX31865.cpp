@@ -62,6 +62,7 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
   spi_dev.begin();
 
   setWires(wires);
+  readFault(true); // perform a selftest
   enableBias(false);
   autoConvert(false);
   clearFault();
@@ -78,6 +79,24 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
 */
 /**************************************************************************/
 uint8_t Adafruit_MAX31865::readFault(void) {
+  return readRegister8(MAX31856_FAULTSTAT_REG);
+}
+
+/**************************************************************************/
+/*!
+    @brief Read the raw 8-bit FAULTSTAT register
+    @param b If true a automatic fault-detection cycle is performed
+    @return The raw unsigned 8-bit FAULT status register
+*/
+/**************************************************************************/
+uint8_t Adafruit_MAX31865::readFault(boolean b) {
+  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
+  if (b) {
+    t |= MAX31856_CONFIG_FAULTDETCYCLE;  // trigger automatic fault-detection cycle
+    writeRegister8(MAX31856_CONFIG_REG, t);
+	delay(5);  // wait for 5ms
+  }
+  
   return readRegister8(MAX31856_FAULTSTAT_REG);
 }
 

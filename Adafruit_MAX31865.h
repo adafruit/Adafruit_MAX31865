@@ -24,6 +24,7 @@
 #define MAX31856_CONFIG_1SHOT 0x20
 #define MAX31856_CONFIG_3WIRE 0x10
 #define MAX31856_CONFIG_24WIRE 0x00
+#define MAX31856_CONFIG_FAULTDETCYCLE  0x84
 #define MAX31856_CONFIG_FAULTSTAT 0x02
 #define MAX31856_CONFIG_FILT50HZ 0x01
 #define MAX31856_CONFIG_FILT60HZ 0x00
@@ -70,6 +71,7 @@ public:
   bool begin(max31865_numwires_t x = MAX31865_2WIRE);
 
   uint8_t readFault(void);
+  uint8_t readFault(boolean b);
   void clearFault(void);
   uint16_t readRTD();
 
