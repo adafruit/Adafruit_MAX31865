@@ -72,6 +72,7 @@ public:
 
   uint8_t readFault(void);
   uint8_t readFault(boolean b);
+  bool checkFault(void);
   void clearFault(void);
   uint16_t readRTD();
 
@@ -83,7 +84,8 @@ public:
   float temperature(float RTDnominal, float refResistor);
 
 private:
-  Adafruit_SPIDevice spi_dev = NULL;
+  int8_t _sclk, _miso, _mosi, _cs;
+  bool _fault;
 
   void readRegisterN(uint8_t addr, uint8_t buffer[], uint8_t n);
 

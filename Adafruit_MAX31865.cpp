@@ -74,6 +74,14 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
 
 /**************************************************************************/
 /*!
+    @brief Read the stored fault status bit included in every RTD read
+    @return true if the bit was set during the last readRTD()
+*/
+/**************************************************************************/
+bool Adafruit_MAX31865::checkFault(void) {return _fault; }
+
+/**************************************************************************/
+/*!
     @brief Read the raw 8-bit FAULTSTAT register
     @return The raw unsigned 8-bit FAULT status register
 */
@@ -110,6 +118,7 @@ void Adafruit_MAX31865::clearFault(void) {
   t &= ~0x2C;
   t |= MAX31865_CONFIG_FAULTSTAT;
   writeRegister8(MAX31865_CONFIG_REG, t);
+  _fault = false;
 }
 
 /**************************************************************************/
@@ -248,10 +257,12 @@ uint16_t Adafruit_MAX31865::readRTD(void) {
   delay(65);
 
   uint16_t rtd = readRegister16(MAX31865_RTDMSB_REG);
-  enableBias(false);	// to lessen sensor self-heating
 
-  // remove fault
-  rtd >>= 1;
+  enableBias(false);	   // to lessen sensor self-heating
+
+  _fault = rtd & 0x0001; // Store the fault flag
+
+  rtd >>= 1;             // remove fault
 
   return rtd;
 }
