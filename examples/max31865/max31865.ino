@@ -46,7 +46,7 @@ void loop() {
   Serial.print("Temperature = "); Serial.println(thermo.temperature(RNOMINAL, RREF));
 
   // Check and print any faults
-  if (checkFault()) {
+  if (thermo.checkFault()) {
     uint8_t fault = thermo.readFault();
     if (fault) {
       Serial.print("Fault 0x"); Serial.println(fault, HEX);

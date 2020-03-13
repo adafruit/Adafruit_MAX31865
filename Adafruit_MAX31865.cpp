@@ -78,7 +78,7 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
     @return true if the bit was set during the last readRTD()
 */
 /**************************************************************************/
-bool Adafruit_MAX31865::checkFault(void) {return _fault; }
+bool Adafruit_MAX31865::checkFault(void) { return _fault; }
 
 /**************************************************************************/
 /*!
@@ -100,11 +100,12 @@ uint8_t Adafruit_MAX31865::readFault(void) {
 uint8_t Adafruit_MAX31865::readFault(boolean b) {
   uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   if (b) {
-    t |= MAX31865_CONFIG_FAULTDETCYCLE;  // trigger automatic fault-detection cycle
+    t |= MAX31865_CONFIG_FAULTDETCYCLE; // trigger automatic fault-detection
+                                        // cycle
     writeRegister8(MAX31865_CONFIG_REG, t);
-	delay(5);  // wait for 5ms
+    delay(5); // wait for 5ms
   }
-  
+
   return readRegister8(MAX31865_FAULTSTAT_REG);
 }
 
@@ -211,7 +212,8 @@ float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
   // Serial.print("\nResistance: "); Serial.println(Rt, 8);
 
   // first, if needed, normalize to 100 ohm
-  if (RTDnominal != 100.0) Rt *= 100.0/RTDnominal;
+  if (RTDnominal != 100.0)
+    Rt *= 100.0 / RTDnominal;
 
   if (Rt >= 100.0) { // above 100 Ohm temperature will become positive
     Z1 = -RTD_A;
@@ -221,7 +223,7 @@ float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
 
     temp = Z2 + (Z3 * Rt);
     temp = (sqrt(temp) + Z1) / Z4;
-  }  else {
+  } else {
     float rpoly = Rt;
 
     temp = -242.02;
@@ -255,11 +257,11 @@ uint16_t Adafruit_MAX31865::readRTD(void) {
 
   uint16_t rtd = readRegister16(MAX31865_RTDMSB_REG);
 
-  enableBias(false);	   // to lessen sensor self-heating
+  enableBias(false); // to lessen sensor self-heating
 
   _fault = rtd & 0x0001; // Store the fault flag
 
-  rtd >>= 1;             // remove fault
+  rtd >>= 1; // remove fault
 
   return rtd;
 }
