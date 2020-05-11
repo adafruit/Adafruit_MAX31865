@@ -143,13 +143,6 @@ void Adafruit_MAX31865::autoConvert(bool b) {
     t |= MAX31856_CONFIG_MODEAUTO; // enable autoconvert
   } else {
     t &= ~MAX31856_CONFIG_MODEAUTO; // disable autoconvert
-
-  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
-  if (b) {
-    t |= MAX31856_CONFIG_BIAS; // enable bias
-  } else {
-    t &= ~MAX31856_CONFIG_BIAS; // disable bias
-
   }
   writeRegister8(MAX31856_CONFIG_REG, t);
 }
