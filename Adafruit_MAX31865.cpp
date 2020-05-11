@@ -149,6 +149,23 @@ void Adafruit_MAX31865::autoConvert(bool b) {
 
 /**************************************************************************/
 /*!
+    @brief Whether we want filter out 50Hz noise or 60Hz noise
+    @param b If true, 50Hz noise is filtered, else 60Hz(default)
+*/
+/**************************************************************************/
+
+void Adafruit_MAX31865::enable50Hz(bool b) {
+  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
+  if (b) {
+    t |= MAX31856_CONFIG_FILT50HZ;
+  } else {
+    t &= ~MAX31856_CONFIG_FILT50HZ;
+  }
+  writeRegister8(MAX31856_CONFIG_REG, t);
+}
+
+/**************************************************************************/
+/*!
     @brief How many wires we have in our RTD setup, can be MAX31865_2WIRE,
     MAX31865_3WIRE, or MAX31865_4WIRE
     @param wires The number of wires in enum format
