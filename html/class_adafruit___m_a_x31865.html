@@ -95,6 +95,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:af0680dc55c043cc56b514fe65c2b9705"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#af0680dc55c043cc56b514fe65c2b9705">autoConvert</a> (bool b)</td></tr>
 <tr class="memdesc:af0680dc55c043cc56b514fe65c2b9705"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether we want to have continuous conversions (50/60 Hz)  <a href="#af0680dc55c043cc56b514fe65c2b9705">More...</a><br /></td></tr>
 <tr class="separator:af0680dc55c043cc56b514fe65c2b9705"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0a806a739f93b371a4edfb99a63ef9a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#af0a806a739f93b371a4edfb99a63ef9a">enable50Hz</a> (bool b)</td></tr>
+<tr class="memdesc:af0a806a739f93b371a4edfb99a63ef9a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Whether we want filter out 50Hz noise or 60Hz noise.  <a href="#af0a806a739f93b371a4edfb99a63ef9a">More...</a><br /></td></tr>
+<tr class="separator:af0a806a739f93b371a4edfb99a63ef9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a402d233283efda0e0a87ed5b37d5c031"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a402d233283efda0e0a87ed5b37d5c031">enableBias</a> (bool b)</td></tr>
 <tr class="memdesc:a402d233283efda0e0a87ed5b37d5c031"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enable the bias voltage on the RTD sensor.  <a href="#a402d233283efda0e0a87ed5b37d5c031">More...</a><br /></td></tr>
 <tr class="separator:a402d233283efda0e0a87ed5b37d5c031"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -298,6 +301,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">b</td><td>If true, auto conversion is enabled </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="af0a806a739f93b371a4edfb99a63ef9a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0a806a739f93b371a4edfb99a63ef9a">&#9670;&nbsp;</a></span>enable50Hz()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_MAX31865::enable50Hz </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>b</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Whether we want filter out 50Hz noise or 60Hz noise. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">b</td><td>If true, 50Hz noise is filtered, else 60Hz(default) </td></tr>
   </table>
   </dd>
 </dl>
