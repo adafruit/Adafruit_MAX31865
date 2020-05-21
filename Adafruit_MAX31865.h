@@ -52,6 +52,8 @@
 #include "WProgram.h"
 #endif
 
+#include <Adafruit_SPIDevice.h>
+
 typedef enum max31865_numwires {
   MAX31865_2WIRE = 0,
   MAX31865_3WIRE = 1,
@@ -79,7 +81,7 @@ public:
   float temperature(float RTDnominal, float refResistor);
 
 private:
-  int8_t _sclk, _miso, _mosi, _cs;
+  Adafruit_SPIDevice spi_dev = NULL;
 
   void readRegisterN(uint8_t addr, uint8_t buffer[], uint8_t n);
 
@@ -87,7 +89,6 @@ private:
   uint16_t readRegister16(uint8_t addr);
 
   void writeRegister8(uint8_t addr, uint8_t reg);
-  uint8_t spixfer(uint8_t addr);
 };
 
 #endif
