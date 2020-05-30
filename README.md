@@ -1,4 +1,4 @@
-# Adafruit MAX31865 ![Build Status](https://github.com/adafruit/Adafruit_MAX31865/workflows/Arduino%20Library%20CI/badge.svg)
+# Adafruit MAX31865 [![Build Status](https://github.com/adafruit/Adafruit_MAX31865/workflows/Arduino%20Library%20CI/badge.svg)](https://github.com/adafruit/Adafruit_MAX31865/actions)
 
 This is the Adafruit MAX31856 Arduino Library 
 
