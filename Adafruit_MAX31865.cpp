@@ -35,7 +35,7 @@
 //
 Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi,
                                      int8_t spi_miso, int8_t spi_clk) {
-  spi_dev = Adafruit_SPIDevice(spi_cs, spi_clk, spi_miso, spi_mosi, 1000000);
+  spi_dev = Adafruit_SPIDevice(spi_cs, spi_clk, spi_miso, spi_mosi, 1000000, SPI_BITORDER_MSBFIRST, SPI_MODE1);
 }
 
 /**************************************************************************/
