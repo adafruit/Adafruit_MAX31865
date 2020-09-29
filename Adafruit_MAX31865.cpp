@@ -227,6 +227,8 @@ uint16_t Adafruit_MAX31865::readRTD(void) {
 
   uint16_t rtd = readRegister16(MAX31865_RTDMSB_REG);
 
+  enableBias(false); // Disable bias current again to reduce selfheating.
+
   // remove fault
   rtd >>= 1;
 
