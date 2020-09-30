@@ -34,10 +34,9 @@
 /**************************************************************************/
 //
 Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi,
-                                     int8_t spi_miso, int8_t spi_clk) {
-  spi_dev = Adafruit_SPIDevice(spi_cs, spi_clk, spi_miso, spi_mosi, 1000000,
-                               SPI_BITORDER_MSBFIRST, SPI_MODE1);
-}
+                                     int8_t spi_miso, int8_t spi_clk)
+    : spi_dev(spi_cs, spi_clk, spi_miso, spi_mosi, 1000000,
+              SPI_BITORDER_MSBFIRST, SPI_MODE1) {}
 
 /**************************************************************************/
 /*!
@@ -45,10 +44,8 @@ Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi,
     @param spi_cs the SPI CS pin to use along with the default SPI device
 */
 /**************************************************************************/
-Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs) {
-  spi_dev =
-      Adafruit_SPIDevice(spi_cs, 1000000, SPI_BITORDER_MSBFIRST, SPI_MODE1);
-}
+Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs)
+    : spi_dev(spi_cs, 1000000, SPI_BITORDER_MSBFIRST, SPI_MODE1) {}
 
 /**************************************************************************/
 /*!
@@ -67,7 +64,7 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
   clearFault();
 
   // Serial.print("config: ");
-  // Serial.println(readRegister8(MAX31856_CONFIG_REG), HEX);
+  // Serial.println(readRegister8(MAX31865_CONFIG_REG), HEX);
   return true;
 }
 
@@ -78,7 +75,7 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
 */
 /**************************************************************************/
 uint8_t Adafruit_MAX31865::readFault(void) {
-  return readRegister8(MAX31856_FAULTSTAT_REG);
+  return readRegister8(MAX31865_FAULTSTAT_REG);
 }
 
 /**************************************************************************/
@@ -87,10 +84,10 @@ uint8_t Adafruit_MAX31865::readFault(void) {
 */
 /**************************************************************************/
 void Adafruit_MAX31865::clearFault(void) {
-  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
+  uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   t &= ~0x2C;
-  t |= MAX31856_CONFIG_FAULTSTAT;
-  writeRegister8(MAX31856_CONFIG_REG, t);
+  t |= MAX31865_CONFIG_FAULTSTAT;
+  writeRegister8(MAX31865_CONFIG_REG, t);
 }
 
 /**************************************************************************/
@@ -100,13 +97,13 @@ void Adafruit_MAX31865::clearFault(void) {
 */
 /**************************************************************************/
 void Adafruit_MAX31865::enableBias(bool b) {
-  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
+  uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   if (b) {
-    t |= MAX31856_CONFIG_BIAS; // enable bias
+    t |= MAX31865_CONFIG_BIAS; // enable bias
   } else {
-    t &= ~MAX31856_CONFIG_BIAS; // disable bias
+    t &= ~MAX31865_CONFIG_BIAS; // disable bias
   }
-  writeRegister8(MAX31856_CONFIG_REG, t);
+  writeRegister8(MAX31865_CONFIG_REG, t);
 }
 
 /**************************************************************************/
@@ -116,13 +113,13 @@ void Adafruit_MAX31865::enableBias(bool b) {
 */
 /**************************************************************************/
 void Adafruit_MAX31865::autoConvert(bool b) {
-  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
+  uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   if (b) {
-    t |= MAX31856_CONFIG_MODEAUTO; // enable autoconvert
+    t |= MAX31865_CONFIG_MODEAUTO; // enable autoconvert
   } else {
-    t &= ~MAX31856_CONFIG_MODEAUTO; // disable autoconvert
+    t &= ~MAX31865_CONFIG_MODEAUTO; // disable autoconvert
   }
-  writeRegister8(MAX31856_CONFIG_REG, t);
+  writeRegister8(MAX31865_CONFIG_REG, t);
 }
 
 /**************************************************************************/
@@ -133,13 +130,13 @@ void Adafruit_MAX31865::autoConvert(bool b) {
 /**************************************************************************/
 
 void Adafruit_MAX31865::enable50Hz(bool b) {
-  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
+  uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   if (b) {
-    t |= MAX31856_CONFIG_FILT50HZ;
+    t |= MAX31865_CONFIG_FILT50HZ;
   } else {
-    t &= ~MAX31856_CONFIG_FILT50HZ;
+    t &= ~MAX31865_CONFIG_FILT50HZ;
   }
-  writeRegister8(MAX31856_CONFIG_REG, t);
+  writeRegister8(MAX31865_CONFIG_REG, t);
 }
 
 /**************************************************************************/
@@ -150,14 +147,14 @@ void Adafruit_MAX31865::enable50Hz(bool b) {
 */
 /**************************************************************************/
 void Adafruit_MAX31865::setWires(max31865_numwires_t wires) {
-  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
+  uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   if (wires == MAX31865_3WIRE) {
-    t |= MAX31856_CONFIG_3WIRE;
+    t |= MAX31865_CONFIG_3WIRE;
   } else {
     // 2 or 4 wire
-    t &= ~MAX31856_CONFIG_3WIRE;
+    t &= ~MAX31865_CONFIG_3WIRE;
   }
-  writeRegister8(MAX31856_CONFIG_REG, t);
+  writeRegister8(MAX31865_CONFIG_REG, t);
 }
 
 /**************************************************************************/
@@ -223,12 +220,14 @@ uint16_t Adafruit_MAX31865::readRTD(void) {
   clearFault();
   enableBias(true);
   delay(10);
-  uint8_t t = readRegister8(MAX31856_CONFIG_REG);
-  t |= MAX31856_CONFIG_1SHOT;
-  writeRegister8(MAX31856_CONFIG_REG, t);
+  uint8_t t = readRegister8(MAX31865_CONFIG_REG);
+  t |= MAX31865_CONFIG_1SHOT;
+  writeRegister8(MAX31865_CONFIG_REG, t);
   delay(65);
 
-  uint16_t rtd = readRegister16(MAX31856_RTDMSB_REG);
+  uint16_t rtd = readRegister16(MAX31865_RTDMSB_REG);
+
+  enableBias(false); // Disable bias current again to reduce selfheating.
 
   // remove fault
   rtd >>= 1;
