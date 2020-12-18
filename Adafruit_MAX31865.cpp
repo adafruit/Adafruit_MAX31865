@@ -92,8 +92,8 @@ void Adafruit_MAX31865::clearFault(void) {
 
 /**************************************************************************/
 /*!
-    @brief Enable the bias voltage on the RTD sensor
-    @param b If true bias is enabled, else disabled
+    @brief Enable the bias voltage on the RTD sensor between readings
+    @param b If true bias is enabled between readings, else disabled
 */
 /**************************************************************************/
 void Adafruit_MAX31865::enableBias(bool b) {
@@ -104,22 +104,31 @@ void Adafruit_MAX31865::enableBias(bool b) {
     t &= ~MAX31865_CONFIG_BIAS; // disable bias
   }
   writeRegister8(MAX31865_CONFIG_REG, t);
+  bias = b;
 }
 
 /**************************************************************************/
 /*!
     @brief Whether we want to have continuous conversions (50/60 Hz)
-    @param b If true, auto conversion is enabled
+    @param b If true, continuous conversion is enabled
 */
 /**************************************************************************/
 void Adafruit_MAX31865::autoConvert(bool b) {
   uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   if (b) {
-    t |= MAX31865_CONFIG_MODEAUTO; // enable autoconvert
+    t |= MAX31865_CONFIG_MODEAUTO; // enable continuous conversion
   } else {
-    t &= ~MAX31865_CONFIG_MODEAUTO; // disable autoconvert
+    t &= ~MAX31865_CONFIG_MODEAUTO; // disable continuous conversion
   }
   writeRegister8(MAX31865_CONFIG_REG, t);
+  if (b && !continuous) {
+    if (filter50Hz) {
+      delay(70);
+    } else {
+      delay(60);
+    } 
+  }
+  continuous = b;
 }
 
 /**************************************************************************/
@@ -137,6 +146,7 @@ void Adafruit_MAX31865::enable50Hz(bool b) {
     t &= ~MAX31865_CONFIG_FILT50HZ;
   }
   writeRegister8(MAX31865_CONFIG_REG, t);
+  filter50Hz = b;
 }
 
 /**************************************************************************/
@@ -218,16 +228,30 @@ float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
 /**************************************************************************/
 uint16_t Adafruit_MAX31865::readRTD(void) {
   clearFault();
-  enableBias(true);
-  delay(10);
-  uint8_t t = readRegister8(MAX31865_CONFIG_REG);
-  t |= MAX31865_CONFIG_1SHOT;
-  writeRegister8(MAX31865_CONFIG_REG, t);
-  delay(65);
+  if (!continuous) {
+    if (!bias) {
+      uint8_t t = readRegister8(MAX31865_CONFIG_REG);
+      t |= MAX31865_CONFIG_BIAS; // enable bias
+      writeRegister8(MAX31865_CONFIG_REG, t);
+      delay(10);
+    }
+    uint8_t t = readRegister8(MAX31865_CONFIG_REG);
+    t |= MAX31865_CONFIG_1SHOT;
+    writeRegister8(MAX31865_CONFIG_REG, t);
+    if (filter50Hz) {
+      delay(70);
+    } else {
+      delay(60);
+    }  
+  }
 
   uint16_t rtd = readRegister16(MAX31865_RTDMSB_REG);
 
-  enableBias(false); // Disable bias current again to reduce selfheating.
+  if (!bias) {
+    uint8_t t = readRegister8(MAX31865_CONFIG_REG);
+    t &= ~MAX31865_CONFIG_BIAS; // disable bias
+    writeRegister8(MAX31865_CONFIG_REG, t);
+  }
 
   // remove fault
   rtd >>= 1;
