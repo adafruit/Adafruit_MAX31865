@@ -89,6 +89,15 @@ private:
   uint16_t readRegister16(uint8_t addr);
 
   void writeRegister8(uint8_t addr, uint8_t reg);
+  
+  // bias voltage
+  bool bias;
+  
+  // continuous conversion
+  bool continuous;
+  
+  // 50Hz filter
+  bool filter50Hz;     
 };
 
 #endif
