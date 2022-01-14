@@ -153,7 +153,7 @@ void Adafruit_MAX31865::setThreshold(uint16_t lower, uint16_t upper) {
   writeRegister8(MAX31865_LFAULTLSB_REG, lower & 0xFF);
   writeRegister8(MAX31865_LFAULTMSB_REG, lower >> 8);
   writeRegister8(MAX31865_HFAULTLSB_REG, upper & 0xFF);
-  writeRegister8(MAX31865_HFAULTMSB_REG, upper >> 8 );
+  writeRegister8(MAX31865_HFAULTMSB_REG, upper >> 8);
 }
 
 /**************************************************************************/
