@@ -91,7 +91,6 @@ void Adafruit_MAX31865::clearFault(void) {
   writeRegister8(MAX31865_CONFIG_REG, t);
 }
 
-
 /**************************************************************************/
 /*!
     @brief Enable the bias voltage on the RTD sensor
