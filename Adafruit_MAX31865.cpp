@@ -173,7 +173,27 @@ void Adafruit_MAX31865::setWires(max31865_numwires_t wires) {
 float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
   float Z1, Z2, Z3, Z4, Rt, temp;
 
-  Rt = readRTD();
+  return temperature(readRTD(), RTDnominal, refResistor);
+}
+/**************************************************************************/
+/*!
+    @brief Calculate the temperature in C from the RTD through calculation of
+   the resistance. Uses
+   http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf
+   technique
+    @param RTDraw The raw 16-bit value from the RTD_REG
+    @param RTDnominal The 'nominal' resistance of the RTD sensor, usually 100
+    or 1000
+    @param refResistor The value of the matching reference resistor, usually
+    430 or 4300
+    @returns Temperature in C
+*/
+/**************************************************************************/
+float Adafruit_MAX31865::temperature(uint16_t RTDraw, float RTDnominal,
+                                     float refResistor) {
+  float Z1, Z2, Z3, Z4, Rt, temp;
+
+  Rt = RTDraw;
   Rt /= 32768;
   Rt *= refResistor;
 
@@ -187,24 +207,23 @@ float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
   temp = Z2 + (Z3 * Rt);
   temp = (sqrt(temp) + Z1) / Z4;
 
-  if (temp >= 0)
-    return temp;
+  if (temp >= 0) return temp;
 
   // ugh.
   Rt /= RTDnominal;
-  Rt *= 100; // normalize to 100 ohm
+  Rt *= 100;  // normalize to 100 ohm
 
   float rpoly = Rt;
 
   temp = -242.02;
   temp += 2.2228 * rpoly;
-  rpoly *= Rt; // square
+  rpoly *= Rt;  // square
   temp += 2.5859e-3 * rpoly;
-  rpoly *= Rt; // ^3
+  rpoly *= Rt;  // ^3
   temp -= 4.8260e-6 * rpoly;
-  rpoly *= Rt; // ^4
+  rpoly *= Rt;  // ^4
   temp -= 2.8183e-8 * rpoly;
-  rpoly *= Rt; // ^5
+  rpoly *= Rt;  // ^5
   temp += 1.5243e-10 * rpoly;
 
   return temp;
