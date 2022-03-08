@@ -83,7 +83,7 @@ public:
 
   float temperature(float RTDnominal, float refResistor);
 
- private:
+private:
   Adafruit_SPIDevice spi_dev;
 
   void readRegisterN(uint8_t addr, uint8_t buffer[], uint8_t n);
