@@ -171,7 +171,7 @@ void Adafruit_MAX31865::setWires(max31865_numwires_t wires) {
 */
 /**************************************************************************/
 float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
-  return temperature(readRTD(), RTDnominal, refResistor);
+  return calculateTemperature(readRTD(), RTDnominal, refResistor);
 }
 /**************************************************************************/
 /*!
@@ -187,8 +187,8 @@ float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
     @returns Temperature in C
 */
 /**************************************************************************/
-float Adafruit_MAX31865::temperature(uint16_t RTDraw, float RTDnominal,
-                                     float refResistor) {
+float Adafruit_MAX31865::calculateTemperature(uint16_t RTDraw, float RTDnominal,
+                                              float refResistor) {
   float Z1, Z2, Z3, Z4, Rt, temp;
 
   Rt = RTDraw;
