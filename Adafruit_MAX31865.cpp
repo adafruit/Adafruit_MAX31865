@@ -205,23 +205,24 @@ float Adafruit_MAX31865::temperature(uint16_t RTDraw, float RTDnominal,
   temp = Z2 + (Z3 * Rt);
   temp = (sqrt(temp) + Z1) / Z4;
 
-  if (temp >= 0) return temp;
+  if (temp >= 0)
+    return temp;
 
   // ugh.
   Rt /= RTDnominal;
-  Rt *= 100;  // normalize to 100 ohm
+  Rt *= 100; // normalize to 100 ohm
 
   float rpoly = Rt;
 
   temp = -242.02;
   temp += 2.2228 * rpoly;
-  rpoly *= Rt;  // square
+  rpoly *= Rt; // square
   temp += 2.5859e-3 * rpoly;
-  rpoly *= Rt;  // ^3
+  rpoly *= Rt; // ^3
   temp -= 4.8260e-6 * rpoly;
-  rpoly *= Rt;  // ^4
+  rpoly *= Rt; // ^4
   temp -= 2.8183e-8 * rpoly;
-  rpoly *= Rt;  // ^5
+  rpoly *= Rt; // ^5
   temp += 1.5243e-10 * rpoly;
 
   return temp;
