@@ -104,6 +104,9 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:ada7f48f78e4bb009c5d2057730a51872"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#ada7f48f78e4bb009c5d2057730a51872">temperature</a> (float RTDnominal, float refResistor)</td></tr>
 <tr class="memdesc:ada7f48f78e4bb009c5d2057730a51872"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the temperature in C from the RTD through calculation of the resistance. Uses <a href="http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf">http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf</a> technique.  <a href="#ada7f48f78e4bb009c5d2057730a51872">More...</a><br /></td></tr>
 <tr class="separator:ada7f48f78e4bb009c5d2057730a51872"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af19f4cb4fadc6529eee1036c2d95d383"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#af19f4cb4fadc6529eee1036c2d95d383">calculateTemperature</a> (uint16_t RTDraw, float RTDnominal, float refResistor)</td></tr>
+<tr class="memdesc:af19f4cb4fadc6529eee1036c2d95d383"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calculate the temperature in C from the RTD through calculation of the resistance. Uses <a href="http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf">http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf</a> technique.  <a href="#af19f4cb4fadc6529eee1036c2d95d383">More...</a><br /></td></tr>
+<tr class="separator:af19f4cb4fadc6529eee1036c2d95d383"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Interface class for the MAX31865 RTD Sensor reader </p>
@@ -388,6 +391,51 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Read the temperature in C from the RTD through calculation of the resistance. Uses <a href="http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf">http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf</a> technique. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
+    <tr><td class="paramname">RTDnominal</td><td>The 'nominal' resistance of the RTD sensor, usually 100 or 1000 </td></tr>
+    <tr><td class="paramname">refResistor</td><td>The value of the matching reference resistor, usually 430 or 4300 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>Temperature in C </dd></dl>
+
+</div>
+</div>
+<a id="af19f4cb4fadc6529eee1036c2d95d383"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af19f4cb4fadc6529eee1036c2d95d383">&#9670;&nbsp;</a></span>calculateTemperature()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float Adafruit_MAX31865::calculateTemperature </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>RTDraw</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>RTDnominal</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">float&#160;</td>
+          <td class="paramname"><em>refResistor</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Calculate the temperature in C from the RTD through calculation of the resistance. Uses <a href="http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf">http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf</a> technique. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">RTDraw</td><td>The raw 16-bit value from the RTD_REG </td></tr>
     <tr><td class="paramname">RTDnominal</td><td>The 'nominal' resistance of the RTD sensor, usually 100 or 1000 </td></tr>
     <tr><td class="paramname">refResistor</td><td>The value of the matching reference resistor, usually 430 or 4300 </td></tr>
   </table>
