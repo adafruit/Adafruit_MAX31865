@@ -171,9 +171,27 @@ void Adafruit_MAX31865::setWires(max31865_numwires_t wires) {
 */
 /**************************************************************************/
 float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
+  return calculateTemperature(readRTD(), RTDnominal, refResistor);
+}
+/**************************************************************************/
+/*!
+    @brief Calculate the temperature in C from the RTD through calculation of
+   the resistance. Uses
+   http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf
+   technique
+    @param RTDraw The raw 16-bit value from the RTD_REG
+    @param RTDnominal The 'nominal' resistance of the RTD sensor, usually 100
+    or 1000
+    @param refResistor The value of the matching reference resistor, usually
+    430 or 4300
+    @returns Temperature in C
+*/
+/**************************************************************************/
+float Adafruit_MAX31865::calculateTemperature(uint16_t RTDraw, float RTDnominal,
+                                              float refResistor) {
   float Z1, Z2, Z3, Z4, Rt, temp;
 
-  Rt = readRTD();
+  Rt = RTDraw;
   Rt /= 32768;
   Rt *= refResistor;
 
