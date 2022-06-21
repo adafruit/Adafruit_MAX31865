@@ -41,7 +41,8 @@ Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi,
 /**************************************************************************/
 /*!
     @brief Create the interface object using hardware SPI
-    @param spi_cs the SPI CS pin to use along with the default SPI device
+    @param spi_cs the SPI chip select pin to use
+    @param theSPI the SPI device to use, default is SPI
 */
 /**************************************************************************/
 Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, SPIClass *theSPI)
