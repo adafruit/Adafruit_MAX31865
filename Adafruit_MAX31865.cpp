@@ -61,7 +61,7 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
   setWires(wires);
   enableBias(false);
   autoConvert(false);
-  setThreshold(0, 0xFFFF);
+  setThresholds(0, 0xFFFF);
   clearFault();
 
   // Serial.print("config: ");
@@ -148,7 +148,7 @@ void Adafruit_MAX31865::enable50Hz(bool b) {
     @param upper raw upper threshold
 */
 /**************************************************************************/
-void Adafruit_MAX31865::setThreshold(uint16_t lower, uint16_t upper) {
+void Adafruit_MAX31865::setThresholds(uint16_t lower, uint16_t upper) {
   writeRegister8(MAX31865_LFAULTLSB_REG, lower & 0xFF);
   writeRegister8(MAX31865_LFAULTMSB_REG, lower >> 8);
   writeRegister8(MAX31865_HFAULTLSB_REG, upper & 0xFF);
@@ -161,7 +161,7 @@ void Adafruit_MAX31865::setThreshold(uint16_t lower, uint16_t upper) {
     @return The raw unsigned 16-bit value, NOT temperature!
 */
 /**************************************************************************/
-uint16_t Adafruit_MAX31865::lowerThreshold(void) {
+uint16_t Adafruit_MAX31865::getLowerThreshold(void) {
   return readRegister16(MAX31865_LFAULTMSB_REG);
 }
 
@@ -171,7 +171,7 @@ uint16_t Adafruit_MAX31865::lowerThreshold(void) {
     @return The raw unsigned 16-bit value, NOT temperature!
 */
 /**************************************************************************/
-uint16_t Adafruit_MAX31865::upperThreshold(void) {
+uint16_t Adafruit_MAX31865::getUpperThreshold(void) {
   return readRegister16(MAX31865_HFAULTMSB_REG);
 }
 

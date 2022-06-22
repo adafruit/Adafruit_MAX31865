@@ -73,9 +73,9 @@ public:
   void clearFault(void);
   uint16_t readRTD();
 
-  void setThreshold(uint16_t lower, uint16_t upper);
-  uint16_t lowerThreshold(void);
-  uint16_t upperThreshold(void);
+  void setThresholds(uint16_t lower, uint16_t upper);
+  uint16_t getLowerThreshold(void);
+  uint16_t getUpperThreshold(void);
 
   void setWires(max31865_numwires_t wires);
   void autoConvert(bool b);
