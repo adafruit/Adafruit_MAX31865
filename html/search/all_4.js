@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['readfault',['readFault',['../class_adafruit___m_a_x31865.html#aceed553ffc0219ceda88065c0a18b8e2',1,'Adafruit_MAX31865']]],
-  ['readrtd',['readRTD',['../class_adafruit___m_a_x31865.html#af6f53874c316520ec0002756a2cc54b8',1,'Adafruit_MAX31865']]]
+  ['getlowerthreshold',['getLowerThreshold',['../class_adafruit___m_a_x31865.html#ace3cf38d2cd811b27a6f415f032d67b3',1,'Adafruit_MAX31865']]],
+  ['getupperthreshold',['getUpperThreshold',['../class_adafruit___m_a_x31865.html#a0b4d35928c122b19f243c96d662c2d66',1,'Adafruit_MAX31865']]]
 ];

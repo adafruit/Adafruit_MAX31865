@@ -89,6 +89,15 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <tr class="memitem:af6f53874c316520ec0002756a2cc54b8"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#af6f53874c316520ec0002756a2cc54b8">readRTD</a> ()</td></tr>
 <tr class="memdesc:af6f53874c316520ec0002756a2cc54b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the raw 16-bit value from the RTD_REG in one shot mode.  <a href="#af6f53874c316520ec0002756a2cc54b8">More...</a><br /></td></tr>
 <tr class="separator:af6f53874c316520ec0002756a2cc54b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae10a858ae08a434d24fb1edcd56de26e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#ae10a858ae08a434d24fb1edcd56de26e">setThresholds</a> (uint16_t lower, uint16_t upper)</td></tr>
+<tr class="memdesc:ae10a858ae08a434d24fb1edcd56de26e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Write the lower and upper values into the threshold fault register to values as returned by <a class="el" href="class_adafruit___m_a_x31865.html#af6f53874c316520ec0002756a2cc54b8" title="Read the raw 16-bit value from the RTD_REG in one shot mode. ">readRTD()</a>  <a href="#ae10a858ae08a434d24fb1edcd56de26e">More...</a><br /></td></tr>
+<tr class="separator:ae10a858ae08a434d24fb1edcd56de26e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ace3cf38d2cd811b27a6f415f032d67b3"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#ace3cf38d2cd811b27a6f415f032d67b3">getLowerThreshold</a> (void)</td></tr>
+<tr class="memdesc:ace3cf38d2cd811b27a6f415f032d67b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the raw 16-bit lower threshold value.  <a href="#ace3cf38d2cd811b27a6f415f032d67b3">More...</a><br /></td></tr>
+<tr class="separator:ace3cf38d2cd811b27a6f415f032d67b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0b4d35928c122b19f243c96d662c2d66"><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a0b4d35928c122b19f243c96d662c2d66">getUpperThreshold</a> (void)</td></tr>
+<tr class="memdesc:a0b4d35928c122b19f243c96d662c2d66"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the raw 16-bit lower threshold value.  <a href="#a0b4d35928c122b19f243c96d662c2d66">More...</a><br /></td></tr>
+<tr class="separator:a0b4d35928c122b19f243c96d662c2d66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6806d5e8da2d9dd200bc00908a23302e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a6806d5e8da2d9dd200bc00908a23302e">setWires</a> (max31865_numwires_t wires)</td></tr>
 <tr class="memdesc:a6806d5e8da2d9dd200bc00908a23302e"><td class="mdescLeft">&#160;</td><td class="mdescRight">How many wires we have in our RTD setup, can be MAX31865_2WIRE, MAX31865_3WIRE, or MAX31865_4WIRE.  <a href="#a6806d5e8da2d9dd200bc00908a23302e">More...</a><br /></td></tr>
 <tr class="separator:a6806d5e8da2d9dd200bc00908a23302e"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -254,6 +263,85 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 </div><div class="memdoc">
 
 <p>Read the raw 16-bit value from the RTD_REG in one shot mode. </p>
+<dl class="section return"><dt>Returns</dt><dd>The raw unsigned 16-bit value, NOT temperature! </dd></dl>
+
+</div>
+</div>
+<a id="ae10a858ae08a434d24fb1edcd56de26e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae10a858ae08a434d24fb1edcd56de26e">&#9670;&nbsp;</a></span>setThresholds()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void Adafruit_MAX31865::setThresholds </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>lower</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>upper</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Write the lower and upper values into the threshold fault register to values as returned by <a class="el" href="class_adafruit___m_a_x31865.html#af6f53874c316520ec0002756a2cc54b8" title="Read the raw 16-bit value from the RTD_REG in one shot mode. ">readRTD()</a> </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lower</td><td>raw lower threshold </td></tr>
+    <tr><td class="paramname">upper</td><td>raw upper threshold </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="ace3cf38d2cd811b27a6f415f032d67b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ace3cf38d2cd811b27a6f415f032d67b3">&#9670;&nbsp;</a></span>getLowerThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Adafruit_MAX31865::getLowerThreshold </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read the raw 16-bit lower threshold value. </p>
+<dl class="section return"><dt>Returns</dt><dd>The raw unsigned 16-bit value, NOT temperature! </dd></dl>
+
+</div>
+</div>
+<a id="a0b4d35928c122b19f243c96d662c2d66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0b4d35928c122b19f243c96d662c2d66">&#9670;&nbsp;</a></span>getUpperThreshold()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint16_t Adafruit_MAX31865::getUpperThreshold </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Read the raw 16-bit lower threshold value. </p>
 <dl class="section return"><dt>Returns</dt><dd>The raw unsigned 16-bit value, NOT temperature! </dd></dl>
 
 </div>
