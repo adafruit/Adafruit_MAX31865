@@ -73,6 +73,10 @@ public:
   void clearFault(void);
   uint16_t readRTD();
 
+  void setThresholds(uint16_t lower, uint16_t upper);
+  uint16_t getLowerThreshold(void);
+  uint16_t getUpperThreshold(void);
+
   void setWires(max31865_numwires_t wires);
   void autoConvert(bool b);
   void enable50Hz(bool b);
