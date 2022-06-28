@@ -73,9 +73,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ab2dfc513b027d4bb957d2588f4155368"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#ab2dfc513b027d4bb957d2588f4155368">Adafruit_MAX31865</a> (int8_t spi_cs, int8_t spi_mosi, int8_t spi_miso, int8_t spi_clk)</td></tr>
 <tr class="memdesc:ab2dfc513b027d4bb957d2588f4155368"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the interface object using software (bitbang) SPI.  <a href="#ab2dfc513b027d4bb957d2588f4155368">More...</a><br /></td></tr>
 <tr class="separator:ab2dfc513b027d4bb957d2588f4155368"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a92866ce4e53d241c6c0b56f433185eb2"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a92866ce4e53d241c6c0b56f433185eb2">Adafruit_MAX31865</a> (int8_t spi_cs)</td></tr>
-<tr class="memdesc:a92866ce4e53d241c6c0b56f433185eb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the interface object using hardware SPI.  <a href="#a92866ce4e53d241c6c0b56f433185eb2">More...</a><br /></td></tr>
-<tr class="separator:a92866ce4e53d241c6c0b56f433185eb2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5edd7ca73bf61592f26e1bdfc99749b3"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a5edd7ca73bf61592f26e1bdfc99749b3">Adafruit_MAX31865</a> (int8_t spi_cs, SPIClass *theSPI=&amp;SPI)</td></tr>
+<tr class="memdesc:a5edd7ca73bf61592f26e1bdfc99749b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Create the interface object using hardware SPI.  <a href="#a5edd7ca73bf61592f26e1bdfc99749b3">More...</a><br /></td></tr>
+<tr class="separator:a5edd7ca73bf61592f26e1bdfc99749b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8b4a784a103039b0b4bdec0598ea952a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a8b4a784a103039b0b4bdec0598ea952a">begin</a> (max31865_numwires_t x=MAX31865_2WIRE)</td></tr>
 <tr class="memdesc:a8b4a784a103039b0b4bdec0598ea952a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SPI interface and set the number of RTD wires used.  <a href="#a8b4a784a103039b0b4bdec0598ea952a">More...</a><br /></td></tr>
 <tr class="separator:a8b4a784a103039b0b4bdec0598ea952a"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -171,8 +171,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="a92866ce4e53d241c6c0b56f433185eb2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a92866ce4e53d241c6c0b56f433185eb2">&#9670;&nbsp;</a></span>Adafruit_MAX31865() <span class="overload">[2/2]</span></h2>
+<a id="a5edd7ca73bf61592f26e1bdfc99749b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5edd7ca73bf61592f26e1bdfc99749b3">&#9670;&nbsp;</a></span>Adafruit_MAX31865() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -181,8 +181,18 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
           <td class="memname">Adafruit_MAX31865::Adafruit_MAX31865 </td>
           <td>(</td>
           <td class="paramtype">int8_t&#160;</td>
-          <td class="paramname"><em>spi_cs</em></td><td>)</td>
+          <td class="paramname"><em>spi_cs</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
           <td></td>
+          <td class="paramtype">SPIClass *&#160;</td>
+          <td class="paramname"><em>theSPI</em> = <code>&amp;SPI</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
         </tr>
       </table>
 </div><div class="memdoc">
@@ -190,7 +200,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 <p>Create the interface object using hardware SPI. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">spi_cs</td><td>the SPI CS pin to use along with the default SPI device </td></tr>
+    <tr><td class="paramname">spi_cs</td><td>the SPI chip select pin to use </td></tr>
+    <tr><td class="paramname">theSPI</td><td>the SPI device to use, default is SPI </td></tr>
   </table>
   </dd>
 </dl>
