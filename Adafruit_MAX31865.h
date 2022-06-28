@@ -65,7 +65,7 @@ class Adafruit_MAX31865 {
 public:
   Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi, int8_t spi_miso,
                     int8_t spi_clk);
-  Adafruit_MAX31865(int8_t spi_cs);
+  Adafruit_MAX31865(int8_t spi_cs, SPIClass *theSPI = &SPI);
 
   bool begin(max31865_numwires_t x = MAX31865_2WIRE);
 
