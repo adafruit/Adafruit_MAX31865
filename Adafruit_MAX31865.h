@@ -60,6 +60,13 @@ typedef enum max31865_numwires {
   MAX31865_4WIRE = 0
 } max31865_numwires_t;
 
+typedef enum {
+  MAX31865_FAULT_NONE = 0,
+  MAX31865_FAULT_AUTO,
+  MAX31865_FAULT_MANUAL_RUN,
+  MAX31865_FAULT_MANUAL_FINISH
+} max31865_fault_cycle_t;
+
 /*! Interface class for the MAX31865 RTD Sensor reader */
 class Adafruit_MAX31865 {
 public:
@@ -69,7 +76,7 @@ public:
 
   bool begin(max31865_numwires_t x = MAX31865_2WIRE);
 
-  uint8_t readFault(void);
+  uint8_t readFault(max31865_fault_cycle_t fault_cycle = MAX31865_FAULT_AUTO);
   void clearFault(void);
   uint16_t readRTD();
 

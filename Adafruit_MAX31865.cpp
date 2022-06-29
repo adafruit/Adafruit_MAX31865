@@ -74,7 +74,26 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
     @return The raw unsigned 8-bit FAULT status register
 */
 /**************************************************************************/
-uint8_t Adafruit_MAX31865::readFault(void) {
+uint8_t Adafruit_MAX31865::readFault(max31865_fault_cycle_t fault_cycle) {
+  if (fault_cycle) {
+    uint8_t cfg_reg = readRegister8(MAX31865_CONFIG_REG);
+    cfg_reg &= 0x11; // mask out wire and filter bits
+    switch (fault_cycle) {
+    case MAX31865_FAULT_AUTO:
+      writeRegister8(MAX31865_CONFIG_REG, (cfg_reg | 0b10000100));
+      delay(1);
+      break;
+    case MAX31865_FAULT_MANUAL_RUN:
+      writeRegister8(MAX31865_CONFIG_REG, (cfg_reg | 0b10001000));
+      return 0;
+    case MAX31865_FAULT_MANUAL_FINISH:
+      writeRegister8(MAX31865_CONFIG_REG, (cfg_reg | 0b10001100));
+      return 0;
+    case MAX31865_FAULT_NONE:
+    default:
+      break;
+    }
+  }
   return readRegister8(MAX31865_FAULTSTAT_REG);
 }
 
