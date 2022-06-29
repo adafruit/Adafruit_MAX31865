@@ -71,6 +71,9 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
 /**************************************************************************/
 /*!
     @brief Read the raw 8-bit FAULTSTAT register
+    @param fault_cycle The fault cycle type to run. Can be MAX31865_FAULT_NONE,
+   MAX31865_FAULT_AUTO, MAX31865_FAULT_MANUAL_RUN, or
+   MAX31865_FAULT_MANUAL_FINISH
     @return The raw unsigned 8-bit FAULT status register
 */
 /**************************************************************************/
