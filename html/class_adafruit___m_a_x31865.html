@@ -79,9 +79,9 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a8b4a784a103039b0b4bdec0598ea952a"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a8b4a784a103039b0b4bdec0598ea952a">begin</a> (max31865_numwires_t x=MAX31865_2WIRE)</td></tr>
 <tr class="memdesc:a8b4a784a103039b0b4bdec0598ea952a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize the SPI interface and set the number of RTD wires used.  <a href="#a8b4a784a103039b0b4bdec0598ea952a">More...</a><br /></td></tr>
 <tr class="separator:a8b4a784a103039b0b4bdec0598ea952a"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aceed553ffc0219ceda88065c0a18b8e2"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#aceed553ffc0219ceda88065c0a18b8e2">readFault</a> (void)</td></tr>
-<tr class="memdesc:aceed553ffc0219ceda88065c0a18b8e2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the raw 8-bit FAULTSTAT register.  <a href="#aceed553ffc0219ceda88065c0a18b8e2">More...</a><br /></td></tr>
-<tr class="separator:aceed553ffc0219ceda88065c0a18b8e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9be3366f1d06309071cf9eb9cec4d957"><td class="memItemLeft" align="right" valign="top">uint8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#a9be3366f1d06309071cf9eb9cec4d957">readFault</a> (max31865_fault_cycle_t fault_cycle=MAX31865_FAULT_AUTO)</td></tr>
+<tr class="memdesc:a9be3366f1d06309071cf9eb9cec4d957"><td class="mdescLeft">&#160;</td><td class="mdescRight">Read the raw 8-bit FAULTSTAT register.  <a href="#a9be3366f1d06309071cf9eb9cec4d957">More...</a><br /></td></tr>
+<tr class="separator:a9be3366f1d06309071cf9eb9cec4d957"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aac7b4480b0824e44bb89c4f862e5419d"><td class="memItemLeft" align="right" valign="top"><a id="aac7b4480b0824e44bb89c4f862e5419d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_adafruit___m_a_x31865.html#aac7b4480b0824e44bb89c4f862e5419d">clearFault</a> (void)</td></tr>
 <tr class="memdesc:aac7b4480b0824e44bb89c4f862e5419d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clear all faults in FAULTSTAT. <br /></td></tr>
@@ -236,8 +236,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
 
 </div>
 </div>
-<a id="aceed553ffc0219ceda88065c0a18b8e2"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aceed553ffc0219ceda88065c0a18b8e2">&#9670;&nbsp;</a></span>readFault()</h2>
+<a id="a9be3366f1d06309071cf9eb9cec4d957"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9be3366f1d06309071cf9eb9cec4d957">&#9670;&nbsp;</a></span>readFault()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -245,14 +245,20 @@ void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="clas
         <tr>
           <td class="memname">uint8_t Adafruit_MAX31865::readFault </td>
           <td>(</td>
-          <td class="paramtype">void&#160;</td>
-          <td class="paramname"></td><td>)</td>
+          <td class="paramtype">max31865_fault_cycle_t&#160;</td>
+          <td class="paramname"><em>fault_cycle</em> = <code>MAX31865_FAULT_AUTO</code></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
 
 <p>Read the raw 8-bit FAULTSTAT register. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">fault_cycle</td><td>The fault cycle type to run. Can be MAX31865_FAULT_NONE, MAX31865_FAULT_AUTO, MAX31865_FAULT_MANUAL_RUN, or MAX31865_FAULT_MANUAL_FINISH </td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>The raw unsigned 8-bit FAULT status register </dd></dl>
 
 </div>
