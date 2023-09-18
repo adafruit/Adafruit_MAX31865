@@ -60,18 +60,29 @@ typedef enum max31865_numwires {
   MAX31865_4WIRE = 0
 } max31865_numwires_t;
 
+typedef enum {
+  MAX31865_FAULT_NONE = 0,
+  MAX31865_FAULT_AUTO,
+  MAX31865_FAULT_MANUAL_RUN,
+  MAX31865_FAULT_MANUAL_FINISH
+} max31865_fault_cycle_t;
+
 /*! Interface class for the MAX31865 RTD Sensor reader */
 class Adafruit_MAX31865 {
 public:
   Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi, int8_t spi_miso,
                     int8_t spi_clk);
-  Adafruit_MAX31865(int8_t spi_cs);
+  Adafruit_MAX31865(int8_t spi_cs, SPIClass *theSPI = &SPI);
 
   bool begin(max31865_numwires_t x = MAX31865_2WIRE);
 
-  uint8_t readFault(void);
+  uint8_t readFault(max31865_fault_cycle_t fault_cycle = MAX31865_FAULT_AUTO);
   void clearFault(void);
   uint16_t readRTD();
+
+  void setThresholds(uint16_t lower, uint16_t upper);
+  uint16_t getLowerThreshold(void);
+  uint16_t getUpperThreshold(void);
 
   void setWires(max31865_numwires_t wires);
   void autoConvert(bool b);
@@ -79,6 +90,8 @@ public:
   void enableBias(bool b);
 
   float temperature(float RTDnominal, float refResistor);
+  float calculateTemperature(uint16_t RTDraw, float RTDnominal,
+                             float refResistor);
 
 private:
   Adafruit_SPIDevice spi_dev;

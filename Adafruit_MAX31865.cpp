@@ -41,11 +41,12 @@ Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, int8_t spi_mosi,
 /**************************************************************************/
 /*!
     @brief Create the interface object using hardware SPI
-    @param spi_cs the SPI CS pin to use along with the default SPI device
+    @param spi_cs the SPI chip select pin to use
+    @param theSPI the SPI device to use, default is SPI
 */
 /**************************************************************************/
-Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs)
-    : spi_dev(spi_cs, 1000000, SPI_BITORDER_MSBFIRST, SPI_MODE1) {}
+Adafruit_MAX31865::Adafruit_MAX31865(int8_t spi_cs, SPIClass *theSPI)
+    : spi_dev(spi_cs, 1000000, SPI_BITORDER_MSBFIRST, SPI_MODE1, theSPI) {}
 
 /**************************************************************************/
 /*!
@@ -61,6 +62,7 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
   setWires(wires);
   enableBias(false);
   autoConvert(false);
+  setThresholds(0, 0xFFFF);
   clearFault();
 
   // Serial.print("config: ");
@@ -71,10 +73,32 @@ bool Adafruit_MAX31865::begin(max31865_numwires_t wires) {
 /**************************************************************************/
 /*!
     @brief Read the raw 8-bit FAULTSTAT register
+    @param fault_cycle The fault cycle type to run. Can be MAX31865_FAULT_NONE,
+   MAX31865_FAULT_AUTO, MAX31865_FAULT_MANUAL_RUN, or
+   MAX31865_FAULT_MANUAL_FINISH
     @return The raw unsigned 8-bit FAULT status register
 */
 /**************************************************************************/
-uint8_t Adafruit_MAX31865::readFault(void) {
+uint8_t Adafruit_MAX31865::readFault(max31865_fault_cycle_t fault_cycle) {
+  if (fault_cycle) {
+    uint8_t cfg_reg = readRegister8(MAX31865_CONFIG_REG);
+    cfg_reg &= 0x11; // mask out wire and filter bits
+    switch (fault_cycle) {
+    case MAX31865_FAULT_AUTO:
+      writeRegister8(MAX31865_CONFIG_REG, (cfg_reg | 0b10000100));
+      delay(1);
+      break;
+    case MAX31865_FAULT_MANUAL_RUN:
+      writeRegister8(MAX31865_CONFIG_REG, (cfg_reg | 0b10001000));
+      return 0;
+    case MAX31865_FAULT_MANUAL_FINISH:
+      writeRegister8(MAX31865_CONFIG_REG, (cfg_reg | 0b10001100));
+      return 0;
+    case MAX31865_FAULT_NONE:
+    default:
+      break;
+    }
+  }
   return readRegister8(MAX31865_FAULTSTAT_REG);
 }
 
@@ -151,6 +175,41 @@ void Adafruit_MAX31865::enable50Hz(bool b) {
 
 /**************************************************************************/
 /*!
+    @brief Write the lower and upper values into the threshold fault
+    register to values as returned by readRTD()
+    @param lower raw lower threshold
+    @param upper raw upper threshold
+*/
+/**************************************************************************/
+void Adafruit_MAX31865::setThresholds(uint16_t lower, uint16_t upper) {
+  writeRegister8(MAX31865_LFAULTLSB_REG, lower & 0xFF);
+  writeRegister8(MAX31865_LFAULTMSB_REG, lower >> 8);
+  writeRegister8(MAX31865_HFAULTLSB_REG, upper & 0xFF);
+  writeRegister8(MAX31865_HFAULTMSB_REG, upper >> 8);
+}
+
+/**************************************************************************/
+/*!
+    @brief Read the raw 16-bit lower threshold value
+    @return The raw unsigned 16-bit value, NOT temperature!
+*/
+/**************************************************************************/
+uint16_t Adafruit_MAX31865::getLowerThreshold(void) {
+  return readRegister16(MAX31865_LFAULTMSB_REG);
+}
+
+/**************************************************************************/
+/*!
+    @brief Read the raw 16-bit lower threshold value
+    @return The raw unsigned 16-bit value, NOT temperature!
+*/
+/**************************************************************************/
+uint16_t Adafruit_MAX31865::getUpperThreshold(void) {
+  return readRegister16(MAX31865_HFAULTMSB_REG);
+}
+
+/**************************************************************************/
+/*!
     @brief How many wires we have in our RTD setup, can be MAX31865_2WIRE,
     MAX31865_3WIRE, or MAX31865_4WIRE
     @param wires The number of wires in enum format
@@ -181,9 +240,27 @@ void Adafruit_MAX31865::setWires(max31865_numwires_t wires) {
 */
 /**************************************************************************/
 float Adafruit_MAX31865::temperature(float RTDnominal, float refResistor) {
+  return calculateTemperature(readRTD(), RTDnominal, refResistor);
+}
+/**************************************************************************/
+/*!
+    @brief Calculate the temperature in C from the RTD through calculation of
+   the resistance. Uses
+   http://www.analog.com/media/en/technical-documentation/application-notes/AN709_0.pdf
+   technique
+    @param RTDraw The raw 16-bit value from the RTD_REG
+    @param RTDnominal The 'nominal' resistance of the RTD sensor, usually 100
+    or 1000
+    @param refResistor The value of the matching reference resistor, usually
+    430 or 4300
+    @returns Temperature in C
+*/
+/**************************************************************************/
+float Adafruit_MAX31865::calculateTemperature(uint16_t RTDraw, float RTDnominal,
+                                              float refResistor) {
   float Z1, Z2, Z3, Z4, Rt, temp;
 
-  Rt = readRTD();
+  Rt = RTDraw;
   Rt /= 32768;
   Rt *= refResistor;
 
