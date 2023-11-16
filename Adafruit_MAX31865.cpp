@@ -294,14 +294,43 @@ float Adafruit_MAX31865::calculateTemperature(uint16_t RTDraw, float RTDnominal,
 */
 /**************************************************************************/
 uint16_t Adafruit_MAX31865::readRTD(void) {
+  readRTDPrepare();
+  delay(10);
+  readRTDSend();
+  delay(65);
+  return readRTDGet();
+}
+
+/**************************************************************************/
+/*!
+    @brief Prepare for reading raw 16-bit value from the RTD_REG
+    in one shot mode
+*/
+/**************************************************************************/
+void Adafruit_MAX31865::readRTDPrepare(void) {
   clearFault();
   enableBias(true);
-  delay(10);
+}
+
+/**************************************************************************/
+/*!
+    @brief Send command for reading raw 16-bit value from the RTD_REG
+    in one shot mode
+*/
+/**************************************************************************/
+void Adafruit_MAX31865::readRTDSend(void) {
   uint8_t t = readRegister8(MAX31865_CONFIG_REG);
   t |= MAX31865_CONFIG_1SHOT;
   writeRegister8(MAX31865_CONFIG_REG, t);
-  delay(65);
+}
 
+/**************************************************************************/
+/*!
+    @brief Get the raw 16-bit value from the RTD_REG in one shot mode
+    @return The raw unsigned 16-bit value, NOT temperature!
+*/
+/**************************************************************************/
+uint16_t Adafruit_MAX31865::readRTDGet(void) {
   uint16_t rtd = readRegister16(MAX31865_RTDMSB_REG);
 
   enableBias(false); // Disable bias current again to reduce selfheating.
