@@ -14,6 +14,7 @@
   BSD license, all text above must be included in any redistribution
  ****************************************************/
 
+#include <Adafruit_SPIDevice.h>
 #include <Adafruit_MAX31865.h>
 
 // Use software SPI: CS, DI, DO, CLK
